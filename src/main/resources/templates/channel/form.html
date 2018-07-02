@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>通道管理-添加</title>
+    <script type="text/javascript" th:src="@{/templates/channel/form.js}"
+            charset="UTF-8"></script>
+</head>
+<body>
+<div layout:fragment="content" class="container" ng-controller="channel.form">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <td colspan="2">
+                <input type="button" value="提交"
+                       ng-click="add()" ng-show="show_add"
+                       ng-disabled="params.channelCode==''||params.channelName==''"
+                />
+                <input type="button" value="更新"
+                       ng-click="update()" ng-show="show_update"
+                       ng-disabled="params.channelCode==''||params.channelName==''"
+                />
+                <input type="button" onclick="back()" value="返回"/>
+            </td>
+        </tr>
+        <tr>
+            <td>字段名称</td>
+            <td>字段值</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="visible">
+            <td>id</td>
+            <td>
+                <input type="number" ng-model="params.id" ng-init="params.id=0"/>
+            </td>
+        </tr>
+        <tr>
+            <td>通道编码</td>
+            <td>
+                <input type="text"
+                       ng-model="params.channelCode" placeholder="通道编码"/>
+            </td>
+        </tr>
+        <tr>
+            <td>通道名称</td>
+            <td>
+                <input type="text"
+                       ng-model="params.channelName" placeholder="通道名称"/>
+            </td>
+        </tr>
+        <tr>
+            <td>请求地址</td>
+            <td>
+                <input type="text"
+                       ng-model="params.reqUrl" placeholder="请求地址"/>
+            </td>
+        </tr>
+        <tr>
+            <td>是否生效</td>
+            <td>
+                <input type="text"
+                       ng-model="params.status" placeholder="是否生效" ng-init="params.status=1"/>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

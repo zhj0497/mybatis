@@ -1,0 +1,9 @@
+//获取当前项目的目录名称
+
+def f = new File("settings.gradle")
+def rootName = f.getAbsoluteFile().getParentFile().name
+println "rootProject.name======" + rootName
+
+rootProject.name = rootName
+
+

@@ -1,0 +1,1 @@
+tmpTransCode=['SMRZ_T002', 'SMRZ_T003', 'SMRZ_T004'];

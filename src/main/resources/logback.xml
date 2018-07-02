@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+    <substitutionProperty name="log.base" value="log"/>
+    <substitutionProperty name="log.name" value="smrz-merchant"/>
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <substitutionProperty name="log.format"
+                          value=" %date [%thread] [%-5level] [%logger{0}:%line] %msg%n"/>
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!-- To enable JMX Management -->
+    <jmxConfigurator/>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!-- <pattern>%-5level %logger{0} - %msg%n</pattern> -->
+            <pattern>${log.format}</pattern>
+        </encoder>
+    </appender>
+    <appender name="app"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log.base}/${log.name}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${log.base}/${log.name}.%d{yyyy-MM-dd}.%i.zip
+            </fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100mb</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <encoder>
+            <pattern>${log.format}</pattern>
+        </encoder>
+        <!-- <triggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+            <maxFileSize>1</maxFileSize> </triggeringPolicy> -->
+    </appender>
+
+    <root level="info">
+        <appender-ref ref="console"/>
+    </root>
+    <logger name="com.cnepay.mybatis" level="info">
+        <appender-ref ref="app"/>
+    </logger>
+    <!--org.hibernate.SQL -->
+    <!-- 	<logger name="org.hibernate.SQL" level="debug">
+            <appender-ref ref="app" />
+        </logger> -->
+    <!--org.hibernate.type -->
+    <!-- 	<logger name="org.hibernate.type" level="debug">
+            <appender-ref ref="app" />
+        </logger> -->
+</configuration>

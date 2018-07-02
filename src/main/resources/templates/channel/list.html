@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>通道管理-list</title>
+</head>
+<body>
+<div layout:fragment="content" class="container" ng-controller="channel.list">
+    <div style="border-color: #0e90d2;">
+    <div style="float: left; white-space: nowrap;">
+        <input type="button" class="btn btn-default" value="添加" ng-click="toAdd()"/>
+    </div>
+    <div style="float: right; white-space: nowrap;">
+        <input ng-change="getPage()"
+               ng-model="params.content.channelCode" placeholder="通道编码"
+               class="btn btn-default"/>
+        <input ng-change="getPage()"
+               ng-model="params.content.channelName" placeholder="通道名称"
+               class="btn btn-default"/>
+    </div>
+    </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <td style="width: 27px">ID</td>
+            <td style="width: 40px">通道编码</td>
+            <td style="width: 52px">通道名称</td>
+            <td style="width: 80px">请求地址</td>
+            <td style="width: 80px">是否生效</td>
+            <td style="width: 80px">创建时间</td>
+            <td style="width: 80px">最后更新时间</td>
+            <td style="width: 80px">操作</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-show="pageInfo.list==null||pageInfo.list.length==0">
+            <td colspan="7">No messages!</td>
+        </tr>
+        <tr ng-repeat="channel in pageInfo.list">
+            <!--<td>{{merchantTransRoute.id}}</td>-->
+            <td>{{channel.id}}</td>
+            <td>{{channel.channelCode}}</td>
+            <td>{{channel.channelName}}</td>
+            <td>{{channel.notifyUrl}}</td>
+            <td>{{channel.status}}</td>
+            <td>{{channel.createDate|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td>{{channel.updateDate|date:'yyyy-MM-dd HH:mm:ss'}}</td>
+            <td style="width: 80px">
+                <input type="button" class="btn btn-default" value="更新" ng-click="toUpdate(channel.id)"/>
+                <input type="button" class="btn btn-default" value="删除" ng-click="delete(channel.id)"/>
+            </td>
+        </tr>
+        <tr>
+            <td ng-show="pageInfo.list!=null" colspan="8">
+                <div class="table-pagination" style="text-align: right">
+                    <ul class="pagination">
+                        <li ng-show="pageInfo.hasPreviousPage==true">
+                            <a ng-click="params.pageNum=pageInfo.pageNum-1;params.pageSize=pageInfo.pageSize;getPage()">上一页</a>
+                        </li>
+                        <li ng-show="pageInfo.hasNextPage==true">
+                            <a ng-click="params.pageNum=pageInfo.pageNum+1;params.pageSize=pageInfo.pageSize;getPage()">下一页</a>
+
+                        </li>
+                        <li th:class="''">
+                            <a>当前页数:{{pageInfo.pageNum}}</a>
+                        </li>
+                        <li th:class="''">
+                            <a> 每页大小:{{pageInfo.pageSize}}</a>
+                        </li>
+                        <li th:class="''">
+                            <a> 总页数:{{pageInfo.pages}}</a>
+                        </li>
+                        <li th:class="''">
+                            <a>总条数:{{pageInfo.total}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript" src="/templates/channel/list.js"
+            charset="UTF-8"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+buildscript {
+    ext { springBootVersion = '1.5.2.RELEASE' }
+    repositories {
+	mavenLocal()
+        maven {url "http://maven.aliyun.com/nexus/content/groups/public"}
+        mavenCentral()
+
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'application'
+
+mainClassName = "com.cnepay.mybatis"
+archivesBaseName = "MybatisService" //不写的话 就是项目名称＋版本号
+version = "1.0-SNAPSHOT"
+springBoot { mainClass = mainClassName }
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+sourceSets {
+    main {
+        java { srcDir 'src/main/java' }
+        groovy { srcDir 'src/main/groovy' }
+        resources { srcDir 'src/main/resources' }
+    }
+    test {
+        java { srcDir 'src/test/java' }
+        groovy { srcDir 'src/test/groovy' }
+        resources { srcDir 'src/test/resources' }
+    }
+}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+
+repositories {
+    mavenLocal()
+    maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+    mavenCentral()
+}
+
+dependencies {
+   
+    //测试阶段使用 --refresh-dependencies 重新刷新缓存
+    compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    compile 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    compile 'com.google.code.gson:gson'
+    compile 'org.springframework.boot:spring-boot-devtools'
+    compile 'com.alibaba:fastjson:1.2.31'
+
+    compile 'org.apache.xmlbeans:xmlbeans:2.6.0'
+
+    // mybatis 分页插件
+    compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.1'
+    compile 'com.alibaba:druid-spring-boot-starter:1.1.6'
+    runtime('mysql:mysql-connector-java')
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'org.springframework.boot:spring-boot-devtools'
+}
+
